@@ -1,0 +1,103 @@
+
+/* MF FRAME V08 — web liquid-glass treatment; native expo-glass-effect is iOS-only. */
+:root { --glass-ink:#193b88; --glass-milk:rgba(255,255,255,.38); }
+/* Layered, refractive-looking material: backdrop blur + directional reflections + inset highlights. */
+.hero{overflow-x:clip;} /* clips a pre-existing decorative glow that escapes 60px on tablets */
+.topbar {
+  background:linear-gradient(178deg,rgba(255,255,255,.49),rgba(247,248,253,.30) 72%,rgba(241,245,255,.46));
+  border-bottom:1px solid rgba(255,255,255,.87);
+  box-shadow:0 12px 38px rgba(29,48,86,.08),inset 0 1px 0 rgba(255,255,255,.92);
+  backdrop-filter:blur(27px) saturate(1.7);-webkit-backdrop-filter:blur(27px) saturate(1.7);
+  isolation:isolate;
+}
+.topbar:before {content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(110deg,rgba(255,255,255,.19),transparent 28%,rgba(149,181,255,.09) 61%,transparent 77%,rgba(255,255,255,.28));}
+.topbar-inner {position:relative;}
+@media(min-width:921px){
+  .nav {position:relative;isolation:isolate;gap:0;padding:5px 7px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.92);
+    background:linear-gradient(160deg,rgba(255,255,255,.68),rgba(220,232,255,.25) 60%,rgba(255,255,255,.49));
+    box-shadow:0 5px 16px rgba(31,57,110,.08),inset 0 1px rgba(255,255,255,.95),inset 0 -1px rgba(192,210,245,.15);
+    backdrop-filter:blur(20px) saturate(1.55);-webkit-backdrop-filter:blur(20px) saturate(1.55);}
+  .nav:before {content:"";position:absolute;inset:1px 16px auto;height:39%;border-radius:100%;background:linear-gradient(180deg,rgba(255,255,255,.55),transparent);pointer-events:none;}
+  .nav a {position:relative;z-index:2;padding:10px 15px;white-space:nowrap;font-weight:700;color:#38455f;}
+  .nav a:hover,.nav a:focus-visible {color:#194ab2;}
+  .nav a:after {display:none;}
+  .nav-spring-indicator{position:absolute;z-index:1;top:5px;left:0;height:calc(100% - 10px);width:1px;opacity:0;border-radius:999px;
+    border:1px solid rgba(255,255,255,.92);pointer-events:none;
+    background:linear-gradient(145deg,rgba(255,255,255,.90),rgba(204,222,255,.67) 64%,rgba(234,243,255,.88));
+    box-shadow:0 4px 12px rgba(35,80,166,.13),inset 0 1px rgba(255,255,255,.96),inset 0 -1px rgba(118,164,251,.22);
+    backdrop-filter:blur(12px) saturate(1.35);-webkit-backdrop-filter:blur(12px) saturate(1.35);will-change:transform,width,opacity;}
+}
+/* All interactive glass controls keep readable contrast. */
+.spring-glass-control{position:relative;isolation:isolate;will-change:transform;touch-action:manipulation;
+  border-radius:17px;transform-origin:center;backface-visibility:hidden;}
+.spring-glass-control:after{content:"";pointer-events:none;position:absolute;inset:0;border-radius:inherit;z-index:0;
+  background:radial-gradient(ellipse 140px 100px at var(--gloss-x,50%) var(--gloss-y,25%),rgba(255,255,255,.45),transparent 71%);
+  mix-blend-mode:screen;opacity:.70;}
+.spring-glass-control > *{position:relative;z-index:1;}
+.btn.spring-glass-control,.nav-cta.spring-glass-control,.glass-footer a.spring-glass-control{
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:0 10px 24px rgba(36,64,126,.14),inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(12,35,95,.12);
+  backdrop-filter:blur(18px) saturate(1.42);-webkit-backdrop-filter:blur(18px) saturate(1.42);
+}
+.btn-primary.spring-glass-control,.nav-cta.spring-glass-control,.glass-footer a.spring-glass-control {
+  background:linear-gradient(145deg,rgba(45,91,229,.95),rgba(45,98,232,.87) 55%,rgba(35,73,195,.98));
+  color:white;
+}
+.btn-outline.spring-glass-control {background:linear-gradient(140deg,rgba(255,255,255,.70),rgba(239,245,255,.45) 63%,rgba(255,255,255,.61));color:#183b8b;
+  border:1px solid rgba(255,255,255,.94);box-shadow:0 12px 28px rgba(37,63,100,.10),inset 0 1px 0 #fff;}
+.solid-white.spring-glass-control {background:linear-gradient(145deg,rgba(255,255,255,.93),rgba(223,237,255,.78));color:#153c8e;}
+.outline-white.spring-glass-control {background:linear-gradient(145deg,rgba(255,255,255,.22),rgba(255,255,255,.08));color:white;border-color:rgba(255,255,255,.55);}
+.spring-glass-control:hover {box-shadow:0 16px 30px rgba(31,68,157,.20),inset 0 1px rgba(255,255,255,.74);}
+.spring-glass-control:active {box-shadow:0 5px 12px rgba(31,68,157,.10),inset 0 2px 4px rgba(33,61,116,.08);}
+/* Buttons bounce by JS spring only. Never animate transforms with fixed-duration transitions. */
+.btn.spring-glass-control:hover,.nav-cta.spring-glass-control:hover,.glass-footer a.spring-glass-control:hover{transform:none;}
+.spring-physics-ready .spring-glass-control {transition:background-color .2s,border-color .2s,box-shadow .2s;}
+/* Service rows get a thin pane only on hover, to avoid overusing glass. */
+.service-row {isolation:isolate;}
+.service-row:hover {background:linear-gradient(95deg,rgba(255,255,255,.41),rgba(214,229,255,.23),transparent 88%);border-radius:19px;}
+/* Scroll track: actual progress value is spring-animated, with no timed transition. */
+.scroll-track{height:4px;z-index:300;background:rgba(201,217,250,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.scroll-track span{background:linear-gradient(90deg,#1d52da,#6496ff);box-shadow:0 0 12px rgba(47,102,238,.40);transition:none;}
+/* Reveal: y and opacity are independently integrated from acceleration/velocity. */
+.spring-physics-ready .reveal {opacity:var(--spring-alpha,0);transform:translate3d(0,var(--spring-y,28px),0);
+  transition:none!important;animation:none!important;filter:none!important;will-change:transform,opacity;}
+.spring-physics-ready .hero h1,.spring-physics-ready .hero-aside{transition:none!important;animation:none!important;}
+/* Mobile: preserve clear tap targets and let liquid material occupy dropdown bar. */
+@media(max-width:720px){
+  .topbar{backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);}
+  .nav{border:1px solid rgba(255,255,255,.87);border-radius:0 0 24px 24px;
+    background:linear-gradient(150deg,rgba(255,255,255,.85),rgba(224,234,255,.63));
+    box-shadow:0 22px 48px rgba(21,44,94,.16),inset 0 1px rgba(255,255,255,.9);
+    backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);}
+  .nav a{padding:15px 12px;border-radius:10px;}
+  .nav a:hover{background:rgba(255,255,255,.5)}
+  .topbar-inner>.nav-cta{border-radius:12px;}
+  .contact-buttons .btn{flex:1 1 170px;}
+}
+/* fallback on browsers without backdrop filter */
+@supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){
+  .topbar,.nav{background:#eff3fb;}
+  .btn-outline.spring-glass-control{background:#e5efff;}
+  .btn-primary.spring-glass-control,.nav-cta.spring-glass-control{background:#2859d8;}
+}
+@media(prefers-reduced-motion:reduce){
+  .spring-physics-ready .reveal{opacity:1!important;transform:none!important;will-change:auto;}
+  .spring-glass-control,.nav-spring-indicator{will-change:auto!important;transform:none!important;transition:none!important;}
+}
+
+/* Middle-width layout: navigate as a mobile glass dropdown instead of overflowing the header. */
+@media(min-width:721px) and (max-width:920px){
+  .topbar-inner{height:74px;padding:0 24px;gap:16px;}
+  .hamburger{display:flex;}
+  .nav{display:none;position:absolute;top:74px;left:0;right:0;z-index:5;padding:15px 24px 23px;
+    flex-direction:column;align-items:stretch;gap:0;border-radius:0 0 24px 24px;
+    border:1px solid rgba(255,255,255,.85);border-top:0;
+    background:linear-gradient(160deg,rgba(255,255,255,.88),rgba(222,234,255,.72));
+    backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);
+    box-shadow:0 20px 44px rgba(23,47,96,.13);}
+  .menu-open .nav{display:flex;}
+  .nav a{font-size:16px;padding:13px 12px;border-bottom:1px solid rgba(147,168,210,.18);}
+  .nav a:after,.nav-spring-indicator{display:none;}
+}
